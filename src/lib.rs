@@ -54,10 +54,12 @@ impl GistpadExtension {
             return Ok(token.to_string());
         }
 
-        Err("A GitHub Personal Access Token with the `gist` scope is required. Set `github_token` \
+        Err(
+            "A GitHub Personal Access Token with the `gist` scope is required. Set `github_token` \
              in the GistPad MCP server settings; create one at \
              https://github.com/settings/tokens/new?scopes=gist."
-            .to_string())
+                .to_string(),
+        )
     }
 
     fn node_binary_path() -> Result<String> {
