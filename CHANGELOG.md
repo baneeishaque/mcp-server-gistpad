@@ -13,7 +13,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   [`gistpad-mcp`](https://github.com/lostintangent/gistpad-mcp) `0.5.0` server for the Agent Panel.
 - Settings UI with a required `github_token` (no fallback to the GitHub CLI or ambient credentials)
   and optional tool groups (`--daily`, `--starred`, `--archived`, `--prompts`, `--markdown`).
-- Uses only Zed's bundled Node.js (≥ 22 required); no system Node or other system tools.
+- Uses only the Node.js runtime provided by Zed (validated ≥ 22, with Zed's managed Node.js as
+  fallback); no system Node or other system tools.
 - `zed_extension_api` pinned exactly to `=0.7.0` with committed `Cargo.lock` for reproducible builds.
 - Installation instructions and fully commented default settings surfaced in Zed's MCP server
   configuration.

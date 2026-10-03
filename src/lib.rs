@@ -60,17 +60,14 @@ impl GistpadExtension {
             .to_string())
     }
 
-    fn node_supports_server() -> Result<String> {
-        let bundled = zed::node_binary_path()?;
-        if node_major(&bundled).is_some_and(|major| major >= MIN_NODE_MAJOR) {
-            return Ok(bundled);
-        }
-
-        Err(format!(
-            "GistPad MCP requires Node >= {MIN_NODE_MAJOR}, and this extension uses only the Node.js \
-             runtime bundled with Zed (no system Node is used). Zed's bundled Node ({bundled}) is older; \
-             please update Zed."
-        ))
+    fn node_binary_path() -> Result<String> {
+        zed::node_binary_path().map_err(|err| {
+            format!(
+                "GistPad MCP uses the Node.js runtime provided by Zed (>= {MIN_NODE_MAJOR}), but Zed \
+                 could not provide one: {err}. Ensure Zed can download its managed Node.js (check \
+                 network/proxy settings), or configure `node.path` in Zed settings."
+            )
+        })
     }
 
     fn server_args(settings: &GistpadContextServerSettings) -> Result<Vec<String>> {
@@ -98,21 +95,6 @@ impl GistpadExtension {
     }
 }
 
-fn node_major(path: &str) -> Option<u32> {
-    let output = zed::process::Command::new(path)
-        .arg("--version")
-        .output()
-        .ok()?;
-    if output.status != Some(0) {
-        return None;
-    }
-    node_major_from_version(String::from_utf8_lossy(&output.stdout).trim())
-}
-
-fn node_major_from_version(version: &str) -> Option<u32> {
-    version.trim_start_matches('v').split('.').next()?.parse().ok()
-}
-
 impl zed::Extension for GistpadExtension {
     fn new() -> Self {
         Self
@@ -134,7 +116,7 @@ impl zed::Extension for GistpadExtension {
         let token = Self::resolve_token(&settings)?;
 
         Ok(Command {
-            command: Self::node_supports_server()?,
+            command: Self::node_binary_path()?,
             args: Self::server_args(&settings)?,
             env: vec![("GITHUB_TOKEN".to_string(), token)],
         })

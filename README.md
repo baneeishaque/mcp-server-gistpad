@@ -9,8 +9,10 @@ Powered by [`gistpad-mcp`](https://github.com/lostintangent/gistpad-mcp).
 ## Requirements
 
 - Zed 1.22.0 or newer.
-- No system dependencies: the extension uses only what Zed provides — Zed's bundled Node.js (22 or
-  newer) and Zed's built-in npm package installer.
+- No system dependencies: the extension uses only what Zed provides — the Node.js runtime provided by
+  Zed (Zed validates Node.js ≥ 22 and otherwise downloads and manages its own runtime, currently
+  Node 24) and Zed's built-in npm package installer. To guarantee that a system Node.js is never
+  used, set `"node": { "ignore_system_version": true }` in your Zed settings.
 - A GitHub Personal Access Token with the `gist` scope (required; see Configuration).
 
 ## Installation
@@ -65,8 +67,8 @@ Ask the agent things like:
 ## How it works
 
 The extension installs the pinned `gistpad-mcp` npm package into its work directory (via Zed's built-in
-npm installer) and spawns it over stdio using Zed's bundled Node.js (≥ 22; no system Node or other system
-tools required), with `GITHUB_TOKEN` set from the required `github_token` setting. Zed's Agent Panel talks
+npm installer) and spawns it over stdio with the Node.js runtime provided by Zed (validated ≥ 22;
+Zed-managed Node.js as fallback), with `GITHUB_TOKEN` set from the required `github_token` setting. Zed's Agent Panel talks
 MCP Tools and Prompts to it.
 
 ## Development

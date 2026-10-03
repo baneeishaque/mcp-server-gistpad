@@ -26,6 +26,7 @@ Until `github_token` is set, the server refuses to start with an actionable erro
 
 ## 3. Requirements
 
-- Zed's bundled Node.js 22 or newer. The extension uses only what Zed provides — no system Node.js or
-  other system tools.
-- The extension uses the `npm:install` and `process:exec` capabilities (Zed prompts on first use).
+- Zed provides the Node.js runtime: Zed validates Node.js ≥ 22 (using a suitable system Node.js when
+  present) and otherwise downloads and manages its own. To guarantee that only Zed's managed Node.js
+  is used, set `"node": { "ignore_system_version": true }` in your Zed settings.
+- No other system tools are required; the `gistpad-mcp` package is installed by Zed's built-in npm.
