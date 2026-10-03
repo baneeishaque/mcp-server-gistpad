@@ -66,18 +66,10 @@ impl GistpadExtension {
             return Ok(bundled);
         }
 
-        if let Ok(output) = zed::process::Command::new("node").arg("--version").output() {
-            if output.status == Some(0) {
-                let version = String::from_utf8_lossy(&output.stdout).trim().to_string();
-                if node_major_from_version(&version).is_some_and(|major| major >= MIN_NODE_MAJOR) {
-                    return Ok("node".to_string());
-                }
-            }
-        }
-
         Err(format!(
-            "GistPad MCP requires Node >= {MIN_NODE_MAJOR}. Zed's bundled Node ({bundled}) is too old \
-             and no suitable `node` was found on PATH. Install Node 22+ (e.g. `mise use -g node@22`)."
+            "GistPad MCP requires Node >= {MIN_NODE_MAJOR}, and this extension uses only the Node.js \
+             runtime bundled with Zed (no system Node is used). Zed's bundled Node ({bundled}) is older; \
+             please update Zed."
         ))
     }
 

@@ -26,5 +26,6 @@ Until `github_token` is set, the server refuses to start with an actionable erro
 
 ## 3. Requirements
 
-- Node.js 22 or newer. Zed's bundled Node is used when it is 22+; otherwise a `node` on `PATH` is used.
+- Zed's bundled Node.js 22 or newer. The extension uses only what Zed provides — no system Node.js or
+  other system tools.
 - The extension uses the `npm:install` and `process:exec` capabilities (Zed prompts on first use).

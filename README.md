@@ -9,7 +9,8 @@ Powered by [`gistpad-mcp`](https://github.com/lostintangent/gistpad-mcp).
 ## Requirements
 
 - Zed 1.22.0 or newer.
-- Node.js 22 or newer (Zed's bundled Node is used when compatible; otherwise `node` from `PATH`).
+- No system dependencies: the extension uses only what Zed provides — Zed's bundled Node.js (22 or
+  newer) and Zed's built-in npm package installer.
 - A GitHub Personal Access Token with the `gist` scope (required; see Configuration).
 
 ## Installation
@@ -28,14 +29,14 @@ Open the Agent Panel, then Settings → AI → MCP Servers → GistPad MCP Serve
 `github_token` is required: the extension has no fallback and never uses the `gh` CLI or any other ambient
 credentials. Create a token at <https://github.com/settings/tokens/new?scopes=gist>.
 
-| Setting                 | Default | Description                                       |
-| ----------------------- | ------- | ------------------------------------------------- |
+| Setting                 | Default | Description                                        |
+| ----------------------- | ------- | -------------------------------------------------- |
 | `github_token`          | `""`    | GitHub Personal Access Token with the `gist` scope |
-| `enable_daily_notes`    | `false` | Enable daily-notes tools and prompts (`--daily`)  |
-| `enable_starred_gists`  | `false` | Enable starring tools (`--starred`)               |
-| `enable_archived_gists` | `false` | Enable archiving tools (`--archived`)             |
-| `enable_prompts`        | `false` | Enable reusable prompt management (`--prompts`)   |
-| `markdown_only`         | `false` | Pass `--markdown` to the server                   |
+| `enable_daily_notes`    | `false` | Enable daily-notes tools and prompts (`--daily`)   |
+| `enable_starred_gists`  | `false` | Enable starring tools (`--starred`)                |
+| `enable_archived_gists` | `false` | Enable archiving tools (`--archived`)              |
+| `enable_prompts`        | `false` | Enable reusable prompt management (`--prompts`)    |
+| `markdown_only`         | `false` | Pass `--markdown` to the server                    |
 
 Example `settings.json`:
 
@@ -63,15 +64,23 @@ Ask the agent things like:
 
 ## How it works
 
-The extension installs the pinned `gistpad-mcp` npm package into its work directory and spawns it over
-stdio (Node ≥ 22) with `GITHUB_TOKEN` set from the required `github_token` setting. Zed's Agent Panel
-talks MCP Tools and Prompts to it.
+The extension installs the pinned `gistpad-mcp` npm package into its work directory (via Zed's built-in
+npm installer) and spawns it over stdio using Zed's bundled Node.js (≥ 22; no system Node or other system
+tools required), with `GITHUB_TOKEN` set from the required `github_token` setting. Zed's Agent Panel talks
+MCP Tools and Prompts to it.
 
 ## Development
 
 ```bash
 cargo build --target wasm32-wasip2 --release
 ```
+
+## Reproducibility
+
+- `zed_extension_api` is pinned to the exact version `=0.7.0` in `Cargo.toml`, and `Cargo.lock` is
+  committed — builds resolve identical dependency versions.
+- The extension targets the `wasm32-wasip2` ABI; the required Zed version follows from that API
+  version (validated against Zed 1.22.0).
 
 ## License
 
