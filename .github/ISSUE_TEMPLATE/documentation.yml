@@ -1,0 +1,21 @@
+name: Documentation Request
+description: Report missing or incorrect documentation
+labels: ["documentation"]
+body:
+  - type: textarea
+    id: missing
+    attributes:
+      label: What is Missing?
+      description: What documentation is missing or incomplete?
+    validations:
+      required: true
+  - type: textarea
+    id: location
+    attributes:
+      label: Suggested Location
+      description: Where should this documentation go?
+  - type: textarea
+    id: examples
+    attributes:
+      label: Examples or References
+      description: Any examples or references to help write the docs
