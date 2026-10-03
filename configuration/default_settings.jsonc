@@ -1,9 +1,43 @@
 {
+    // ── Authentication ────────────────────────────────────────────────────────
+    //
+    // GitHub Personal Access Token used to call the GistPad MCP server.
+    //
+    // REQUIRED: there is no fallback. The extension never reads `gh auth`
+    // state, never bundles a GitHub account, and never uses ambient
+    // credentials — when this value is empty, the server refuses to start.
+    //
+    // The token needs ONLY the `gist` scope (classic token):
+    //   https://github.com/settings/tokens/new?scopes=gist
+    //
     "github_token": "",
-    "use_gh_cli_token": true,
+
+    // ── Optional tool groups ──────────────────────────────────────────────────
+    //
+    // Each toggle adds a group of MCP tools (and, for daily notes and
+    // prompts, MCP prompts) to the server. All default to `false`, so the
+    // base install exposes the core gist tools only.
+    //
+
+    // Daily notes & todos: enables the `--daily` server flag.
+    // Adds tools to read/update today's daily note and manage todos.
     "enable_daily_notes": false,
+
+    // Starring: enables the `--starred` server flag.
+    // Adds tools to star/unstar gists and list starred gists.
     "enable_starred_gists": false,
+
+    // Archiving: enables the `--archived` server flag.
+    // Adds tools to archive/unarchive gists and list archived gists.
     "enable_archived_gists": false,
+
+    // Reusable prompts: enables the `--prompts` server flag.
+    // Adds prompt-management tools and MCP prompts.
     "enable_prompts": false,
-    "markdown_only": false
+
+    // ── Miscellaneous ─────────────────────────────────────────────────────────
+    //
+    // Markdown only: passes the `--markdown` flag to the server.
+    // (Enable when you want the server to assume markdown-only workflows.)
+    "markdown_only": false,
 }

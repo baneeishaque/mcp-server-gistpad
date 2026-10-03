@@ -3,20 +3,16 @@
 Connects Zed's Agent Panel to your GitHub Gists: browse, create, edit, and comment on gists; optionally add
 daily notes, starred/archived gists, and reusable prompts.
 
-## 1. Authenticate
+## 1. Authenticate (required)
 
-Option A — Personal Access Token (recommended):
+GistPad always uses your own GitHub Personal Access Token. There is no fallback: the extension never uses
+the GitHub CLI or any other ambient credentials.
 
 1. Open <https://github.com/settings/tokens/new?scopes=gist>.
 2. Name it `Zed GistPad MCP`, select the `gist` scope only, and generate the token.
 3. Paste the token into the `github_token` setting below.
 
-Option B — GitHub CLI fallback (leave `github_token` empty and keep `use_gh_cli_token` enabled):
-
-```bash
-gh auth login          # ensure the `gist` scope is granted
-gh auth refresh -s gist
-```
+Until `github_token` is set, the server refuses to start with an actionable error.
 
 ## 2. Optional tool groups
 

@@ -10,6 +10,7 @@ Powered by [`gistpad-mcp`](https://github.com/lostintangent/gistpad-mcp).
 
 - Zed 1.22.0 or newer.
 - Node.js 22 or newer (Zed's bundled Node is used when compatible; otherwise `node` from `PATH`).
+- A GitHub Personal Access Token with the `gist` scope (required; see Configuration).
 
 ## Installation
 
@@ -24,15 +25,17 @@ Zed fetches the pinned `gistpad-mcp` npm package on first use.
 
 Open the Agent Panel, then Settings → AI → MCP Servers → GistPad MCP Server → Configure.
 
-| Setting                 | Default | Description                                              |
-| ----------------------- | ------- | -------------------------------------------------------- |
-| `github_token`          | `""`    | GitHub Personal Access Token with the `gist` scope       |
-| `use_gh_cli_token`      | `true`  | Fall back to `gh auth token` when no token is set        |
-| `enable_daily_notes`    | `false` | Enable daily-notes tools and prompts (`--daily`)         |
-| `enable_starred_gists`  | `false` | Enable starring tools (`--starred`)                      |
-| `enable_archived_gists` | `false` | Enable archiving tools (`--archived`)                    |
-| `enable_prompts`        | `false` | Enable reusable prompt management (`--prompts`)          |
-| `markdown_only`         | `false` | Pass `--markdown` to the server                          |
+`github_token` is required: the extension has no fallback and never uses the `gh` CLI or any other ambient
+credentials. Create a token at <https://github.com/settings/tokens/new?scopes=gist>.
+
+| Setting                 | Default | Description                                       |
+| ----------------------- | ------- | ------------------------------------------------- |
+| `github_token`          | `""`    | GitHub Personal Access Token with the `gist` scope |
+| `enable_daily_notes`    | `false` | Enable daily-notes tools and prompts (`--daily`)  |
+| `enable_starred_gists`  | `false` | Enable starring tools (`--starred`)               |
+| `enable_archived_gists` | `false` | Enable archiving tools (`--archived`)             |
+| `enable_prompts`        | `false` | Enable reusable prompt management (`--prompts`)   |
+| `markdown_only`         | `false` | Pass `--markdown` to the server                   |
 
 Example `settings.json`:
 
@@ -61,8 +64,8 @@ Ask the agent things like:
 ## How it works
 
 The extension installs the pinned `gistpad-mcp` npm package into its work directory and spawns it over
-stdio (Node ≥ 22) with `GITHUB_TOKEN` resolved from settings or the GitHub CLI. Zed's Agent Panel talks
-MCP Tools and Prompts to it.
+stdio (Node ≥ 22) with `GITHUB_TOKEN` set from the required `github_token` setting. Zed's Agent Panel
+talks MCP Tools and Prompts to it.
 
 ## Development
 

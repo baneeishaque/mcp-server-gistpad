@@ -11,13 +11,11 @@ const SERVER_PATH: &str = "node_modules/gistpad-mcp/build/index.js";
 const CONTEXT_SERVER_ID: &str = "mcp-server-gistpad";
 const MIN_NODE_MAJOR: u32 = 22;
 
-#[derive(Debug, Deserialize, JsonSchema)]
+#[derive(Debug, Default, Deserialize, JsonSchema)]
 struct GistpadContextServerSettings {
-    /// GitHub Personal Access Token with only the `gist` scope.
+    /// GitHub Personal Access Token with only the `gist` scope. Required: the
+    /// extension never falls back to `gh auth` or any other ambient credentials.
     github_token: Option<String>,
-    /// Fall back to `gh auth token` when no token is configured (default: true).
-    #[serde(default = "default_true")]
-    use_gh_cli_token: bool,
     /// Expose daily-notes tools and prompts (default: false).
     #[serde(default)]
     enable_daily_notes: bool,
@@ -33,24 +31,6 @@ struct GistpadContextServerSettings {
     /// Pass `--markdown` to the server (default: false).
     #[serde(default)]
     markdown_only: bool,
-}
-
-fn default_true() -> bool {
-    true
-}
-
-impl Default for GistpadContextServerSettings {
-    fn default() -> Self {
-        Self {
-            github_token: None,
-            use_gh_cli_token: true,
-            enable_daily_notes: false,
-            enable_starred_gists: false,
-            enable_archived_gists: false,
-            enable_prompts: false,
-            markdown_only: false,
-        }
-    }
 }
 
 struct GistpadExtension;
@@ -74,22 +54,9 @@ impl GistpadExtension {
             return Ok(token.to_string());
         }
 
-        if settings.use_gh_cli_token {
-            if let Ok(output) = zed::process::Command::new("gh")
-                .args(["auth", "token"])
-                .output()
-            {
-                if output.status == Some(0) {
-                    let token = String::from_utf8_lossy(&output.stdout).trim().to_string();
-                    if !token.is_empty() {
-                        return Ok(token);
-                    }
-                }
-            }
-        }
-
-        Err("No GitHub token available. Set `github_token` in the GistPad MCP server settings \
-             (scope: gist), or run `gh auth login`."
+        Err("A GitHub Personal Access Token with the `gist` scope is required. Set `github_token` \
+             in the GistPad MCP server settings; create one at \
+             https://github.com/settings/tokens/new?scopes=gist."
             .to_string())
     }
 
