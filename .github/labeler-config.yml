@@ -9,4 +9,4 @@ documentation:
     - any-glob-to-any-file: ['**/*.md', 'docs/**']
 configuration:
   - changed-files:
-    - any-glob-to-any-file: ['configuration/**']
+    - any-glob-to-any-file: ['extension.toml']
