@@ -26,5 +26,5 @@ jobs:
             return m[1].trim().replace(/\s+/g, ' ');
       - name: Update repo description
         env:
-          GH_TOKEN: ${{ github.token }}
+          GH_TOKEN: ${{ secrets.REPO_ADMIN_TOKEN }}
         run: gh repo edit ${{ github.repository }} --description "${{ steps.extract.outputs.result }}"

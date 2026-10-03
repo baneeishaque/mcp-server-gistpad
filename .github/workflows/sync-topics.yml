@@ -28,7 +28,7 @@ jobs:
             return topics.join(',');
       - name: Update repo topics
         env:
-          GH_TOKEN: ${{ github.token }}
+          GH_TOKEN: ${{ secrets.REPO_ADMIN_TOKEN }}
         run: |
           TOPICS="${{ steps.extract.outputs.result }}"
           [ -n "$TOPICS" ] || exit 0
