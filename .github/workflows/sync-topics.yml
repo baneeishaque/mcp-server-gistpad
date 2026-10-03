@@ -13,7 +13,7 @@ jobs:
       contents: read
       repository-projects: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Extract topics
         id: extract
         uses: actions/github-script@v7
