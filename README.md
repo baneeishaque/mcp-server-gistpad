@@ -41,7 +41,7 @@ Example `settings.json`:
     "context_servers": {
         "mcp-server-gistpad": {
             "settings": {
-                "github_token": "github_pat_..."
+                "github_token": "<your-github-token>"
             }
         }
     }
