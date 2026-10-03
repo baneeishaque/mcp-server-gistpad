@@ -1,0 +1,9 @@
+{
+    "github_token": "",
+    "use_gh_cli_token": true,
+    "enable_daily_notes": false,
+    "enable_starred_gists": false,
+    "enable_archived_gists": false,
+    "enable_prompts": false,
+    "markdown_only": false
+}

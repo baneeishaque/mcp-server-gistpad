@@ -1,0 +1,9 @@
+id = "mcp-server-gistpad"
+name = "GistPad MCP Server"
+description = "GitHub Gists in Zed: browse, create, edit, and comment on gists, with daily notes and prompts."
+version = "0.1.0"
+schema_version = 1
+authors = ["Banee Ishaque K"]
+repository = "https://github.com/Baneeishaque/mcp-server-gistpad"
+
+[context_servers.mcp-server-gistpad]
