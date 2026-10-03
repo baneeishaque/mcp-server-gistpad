@@ -1,5 +1,9 @@
 # GistPad MCP Server for Zed
 
+<!-- START_DESCRIPTION -->
+GitHub Gists in Zed: browse, create, edit, and comment on gists, with daily notes and prompts.
+<!-- END_DESCRIPTION -->
+
 [GistPad](https://github.com/lostintangent/gistpad) for [Zed](https://zed.dev): browse, create, edit, and
 comment on GitHub Gists from the Agent Panel, with optional daily notes, starred/archived gists, and
 reusable prompts.
@@ -84,6 +88,21 @@ cargo build --target wasm32-wasip2 --release
 - The extension targets the `wasm32-wasip2` ABI; the required Zed version follows from that API
   version (validated against Zed 1.22.0).
 
+## Topics
+
+| Topic           | Description                    |
+| --------------- | ------------------------------ |
+| `zed`           | Zed editor extension           |
+| `zed-extension` | Zed extension registry package |
+| `mcp`           | Model Context Protocol         |
+| `mcp-server`    | MCP server integration         |
+| `github-gists`  | GitHub Gists workflows         |
+| `gistpad`       | GistPad ecosystem              |
+
 ## License
 
 MIT. GistPad and gistpad-mcp are MIT-licensed projects by Jonathan Carter (lostintangent).
+
+<!-- MaC-marker:maturity -->
+![Beta](https://img.shields.io/badge/maturity-beta-yellow)
+<!-- /MaC-marker:maturity -->

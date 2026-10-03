@@ -1,0 +1,12 @@
+rust:
+  - changed-files:
+    - any-glob-to-any-file: ['src/**', 'Cargo.toml', 'Cargo.lock']
+ci:
+  - changed-files:
+    - any-glob-to-any-file: ['.github/**']
+documentation:
+  - changed-files:
+    - any-glob-to-any-file: ['**/*.md', 'docs/**']
+configuration:
+  - changed-files:
+    - any-glob-to-any-file: ['configuration/**']

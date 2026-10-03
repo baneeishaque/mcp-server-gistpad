@@ -1,0 +1,33 @@
+name: Sync Description
+
+on:
+  push:
+    branches: [main, master]
+    paths: ['README.md']
+
+jobs:
+  sync:
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Extract description
+        id: extract
+        run: |
+          DESCRIPTION=$(python3 -c "
+import re, sys
+text = open('README.md').read()
+m = re.search(r'<!-- START_DESCRIPTION -->(.*?)<!-- END_DESCRIPTION -->', text, re.DOTALL)
+if m:
+    desc = m.group(1).strip()
+    desc = re.sub(r'\s+', ' ', desc)
+    print(desc, end='')
+else:
+    sys.exit(1)
+")
+          echo "description=$DESCRIPTION" >> $GITHUB_OUTPUT
+      - name: Update repo description
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh repo edit ${{ github.repository }} --description "${{ steps.extract.outputs.description }}"
